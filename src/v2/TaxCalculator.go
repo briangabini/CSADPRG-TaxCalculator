@@ -10,23 +10,34 @@ func main() {
 	var totalDeductions float64 = 0
 	var sssContribution float64 = 0
 	var pagIbigContribution float64 = 0
-	var philHealthContribution float64 = 0
+	var philHealthContribution float64 = 03
 	var monthlyContributions float64 = 0
 	var netPayAfterTax float64 = 0
+	var taxableIncome float64 = 0
 	var incomeTax float64 = 0
 	var netPayAfterDeductions float64 = 0
 
-	fmt.Print("Enter your monthly salary: ")
-	fmt.Scanf("%f", &monthlySalary)
+	for {
+		fmt.Print("Enter your monthly salary: ")
+		fmt.Scanf("%f", &monthlySalary)
+
+		if monthlySalary >= 0 {
+			break
+		} else {
+			fmt.Printf("Invalid input. Please enter a positive number.\n\n")
+			fmt.Scanln()
+		}
+	}
 
 	sssContribution = computeSss(monthlySalary)
 	pagIbigContribution = computePagIbig(monthlySalary)
 	philHealthContribution = computePhilHealth(monthlySalary)
 	monthlyContributions = computeMonthlyContributions(monthlySalary)
-	incomeTax = computeIncomeTax(monthlySalary)
+	taxableIncome = monthlySalary - monthlyContributions
+	incomeTax = computeIncomeTax(taxableIncome)
 	netPayAfterTax = monthlySalary - incomeTax
 	totalDeductions = monthlyContributions + incomeTax
-	netPayAfterDeductions = netPayAfterTax - totalDeductions
+	netPayAfterDeductions = monthlySalary - totalDeductions
 
 	// Display Computations
 	fmt.Println("")
@@ -99,24 +110,24 @@ func computePagIbig(monthlySalary float64) float64 {
 		return monthlySalary * .02
 	} else {
 		return 100.0
-	}
+	} 
 }
 
 // computeIncomeTax() computes the taxable income for a given salary
-func computeIncomeTax(monthlySalary float64) float64 {
+func computeIncomeTax(taxableIncome float64) float64 {
 	// TODO implement this function
-	if monthlySalary < 20833 {
+	if taxableIncome < 20833 {
 		return 0
-	} else if monthlySalary < 33333 {
-		return 0 + (monthlySalary - 20833) * 0.2
-	} else if monthlySalary < 66667 {
-		return 0 + (monthlySalary - 33333) * 0.25
-	} else if monthlySalary < 166667 {
-		return 0 + (monthlySalary - 66667) * 0.3
-	} else if monthlySalary < 666667 {
-		return 0 + (monthlySalary - 166667) * 0.32
+	} else if taxableIncome < 33333 {
+		return 0 + (taxableIncome - 20833) * 0.15
+	} else if taxableIncome < 66667 {
+		return 1875 + (taxableIncome - 33333) * 0.2
+	} else if taxableIncome < 166667 {
+		return 8541.80 + (taxableIncome - 66667) * 0.25
+	} else if taxableIncome < 666667 {
+		return 33541.80 + (taxableIncome - 166667) * 0.30
 	} else {
-		return 0 + (monthlySalary - 666667) * 0.35
+		return 183541.80 + (taxableIncome - 666667) * 0.35
 	}
 }
 
