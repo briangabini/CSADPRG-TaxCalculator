@@ -55,7 +55,7 @@ func main() {
 	totalDeductionLabel := canvas.NewText("Total Deductions", color.White)
 	netPayDeductionLabel := canvas.NewText("Net Pay After Deductions", color.White)
 	headingLabel := canvas.NewText("Philippine Tax Calculator", color.White)
-	headingAesthetic := canvas.NewText("////", color.NRGBA{R: 0, G: 100, B: 0, A: 255})
+	headingAesthetic := canvas.NewText("////", color.NRGBA{R: 0, G: 255, B: 0, A: 255})
 
 	totalMonthlyText.Alignment = fyne.TextAlignCenter
 	totalDeductionLabel.Alignment = fyne.TextAlignCenter
@@ -140,9 +140,6 @@ func main() {
 		totalDeductions.Text = fmt.Sprintf("%.2f", contributions+tax)
 		netPayAfterDeductions.Text = fmt.Sprintf("%.2f", salary-contributions-tax)
 
-		for _, text := range fonts {
-			text.TextSize = 16
-		}
 	})
 
 	clearBtn := widget.NewButton("Clear", func() {
@@ -161,13 +158,19 @@ func main() {
 	sssRow := container.New(layout.NewHBoxLayout(), sssText, layout.NewSpacer(), sssContribution)
 	philHealthRow := container.New(layout.NewHBoxLayout(), philHealthText, layout.NewSpacer(), philHealthContribution)
 	pagIbigRow := container.New(layout.NewHBoxLayout(), pagIbigText, layout.NewSpacer(), pagIbigContribution)
-	totalMonthlyCol := container.New(layout.NewVBoxLayout(), totalMonthlyText, totalMonthlyContributions)
 
-	incomeTaxCol := container.New(layout.NewVBoxLayout(), incomeTaxText, incomeTax)
-	netPayTaxCol := container.New(layout.NewVBoxLayout(), netPayTaxText, netPayAfterTax)
+	totalMonthlySpace := container.New(layout.NewCenterLayout(), totalMonthlyContributions)
+	totalMonthlyCol := container.New(layout.NewVBoxLayout(), totalMonthlyText, totalMonthlySpace)
 
-	totalDeductionCol := container.New(layout.NewVBoxLayout(), totalDeductionLabel, totalDeductions)
-	netPayDeductionCol := container.New(layout.NewVBoxLayout(), netPayDeductionLabel, netPayAfterDeductions)
+	incomeTaxSpace := container.New(layout.NewHBoxLayout(), incomeTax)
+	netPayTaxSpace := container.New(layout.NewHBoxLayout(), netPayAfterTax)
+	incomeTaxCol := container.New(layout.NewVBoxLayout(), incomeTaxText, incomeTaxSpace)
+	netPayTaxCol := container.New(layout.NewVBoxLayout(), netPayTaxText, netPayTaxSpace)
+
+	totalDeductionSpace := container.New(layout.NewCenterLayout(), totalDeductions)
+	netPayDeductionSpace := container.New(layout.NewCenterLayout(), netPayAfterDeductions)
+	totalDeductionCol := container.New(layout.NewVBoxLayout(), totalDeductionLabel, totalDeductionSpace)
+	netPayDeductionCol := container.New(layout.NewVBoxLayout(), netPayDeductionLabel, netPayDeductionSpace)
 
 	line := canvas.NewRectangle(color.NRGBA{R: 100, G: 100, B: 100, A: 255})
 	monthlyTable := container.New(layout.NewVBoxLayout(), sssRow, philHealthRow, pagIbigRow, line, totalMonthlyCol)
