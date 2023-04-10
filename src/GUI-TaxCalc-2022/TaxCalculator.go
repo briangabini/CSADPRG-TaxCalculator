@@ -116,7 +116,6 @@ func main() {
 	}
 
 	calculateBtn := widget.NewButton("Calculate", func() {
-		//TODO implement input function
 		salary, err := strconv.ParseFloat(monthlySalary.Text, 64)
 		if err != nil {
 			fmt.Println("Invalid input:", err)
@@ -143,7 +142,6 @@ func main() {
 	})
 
 	clearBtn := widget.NewButton("Clear", func() {
-		//TODO implement clear function
 		monthlySalary.SetText("")
 		sssContribution.Text = "--"
 		pagIbigContribution.Text = "--"
@@ -241,7 +239,6 @@ func computePhilHealth(monthlySalary float64) float64 {
 // computePagIbig() computes the Pag-Ibig contribution for a given salary
 // unchanged from 2021 rates
 func computePagIbig(monthlySalary float64) float64 {
-
 	switch {
 	case monthlySalary < 1500:
 		return monthlySalary * .01
@@ -255,7 +252,6 @@ func computePagIbig(monthlySalary float64) float64 {
 // computeIncomeTax() computes the taxable income for a given salary
 // changed to 2022 rates
 func computeIncomeTax(taxableIncome float64) float64 {
-	// TODO implement this function
 	switch {
 	case taxableIncome < 20833:
 		return 0
