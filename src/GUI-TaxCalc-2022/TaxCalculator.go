@@ -216,7 +216,7 @@ func computeSss(monthlySalary float64) float64 {
 			multiplier = math.Ceil(multiplier)
 		}
 
-		return 135 + multiplier*22.5
+		return 135 + multiplier * 22.5
 	} else {
 		return 135.0
 	}
@@ -227,42 +227,41 @@ func computeSss(monthlySalary float64) float64 {
 func computePhilHealth(monthlySalary float64) float64 {
 
 	switch {
-	case monthlySalary < 10000:
-		return 200.0
+	case monthlySalary <= 10000:
+		return 400.0 / 2
 	case monthlySalary < 80000:
 		return monthlySalary * 0.04 / 2
 	default:
-		return 3200.0
+		return 3200.0 / 2
 	}
 }
 
 // computePagIbig() computes the Pag-Ibig contribution for a given salary
-// unchanged from 2021 rates
+// 2022 rates
 func computePagIbig(monthlySalary float64) float64 {
-	switch {
-	case monthlySalary < 1500:
+
+	if monthlySalary < 1500 {
 		return monthlySalary * .01
-	case monthlySalary < 5000:
+	} else { 
 		return monthlySalary * .02
-	default:
-		return 100.0
 	}
+	
 }
 
 // computeIncomeTax() computes the taxable income for a given salary
 // changed to 2022 rates
 func computeIncomeTax(taxableIncome float64) float64 {
 	switch {
-	case taxableIncome < 20833:
+	case taxableIncome <= 20833:
 		return 0
 	case taxableIncome < 33333:
-		return 0 + (taxableIncome-20833)*0.15
+		return 0 + (taxableIncome-20833)*0.20
 	case taxableIncome < 66667:
-		return 2500 + (taxableIncome-33333)*0.20
+		return 2500 + (taxableIncome-33333)*0.25
 	case taxableIncome < 166667:
-		return 10833.33 + (taxableIncome-66667)*0.25
+		return 10833.33 + (taxableIncome-66667)*0.30
 	case taxableIncome < 666667:
-		return 40833.33 + (taxableIncome-166667)*0.30
+		return 40833.33 + (taxableIncome-166667)*0.32
 	default:
 		return 200833.33 + (taxableIncome-666667)*0.35
 	}
